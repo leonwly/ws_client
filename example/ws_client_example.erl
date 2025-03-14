@@ -10,7 +10,7 @@
 -behaviour(gen_server).
 -behavior(ws_client).
 
--export([start_link/0]).
+-export([start_link/0, stop/0]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2,
 	code_change/3]).
 -export([ws_handle_up/1, ws_handle_upgrade/2, ws_handle_down/2, ws_handle_error/3,
@@ -36,6 +36,9 @@
 
 start_link() ->
 	gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+stop() ->
+	gen_server:stop(?MODULE).
 
 send(Message) ->
 	gen_server:cast(?MODULE, {send, Message}).
